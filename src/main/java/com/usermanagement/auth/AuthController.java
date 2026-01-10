@@ -1,5 +1,7 @@
 package com.usermanagement.auth;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,13 @@ public class AuthController {
             req.getRole()
         );
         return "Signup successful";
+    }
+    
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest req) {
+    	
+       String token = authService.login(req);
+       
+       return ResponseEntity.status(HttpStatus.OK).body( new LoginResponse(token));
     }
 }
